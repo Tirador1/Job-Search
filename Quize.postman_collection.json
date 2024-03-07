@@ -1,0 +1,722 @@
+{
+	"info": {
+		"_postman_id": "72a29f6b-aeca-459b-ac48-01765bd8a837",
+		"name": "Quize",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31038689"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "SignUp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\":\"Ahmad\",\r\n    \"lastName\":\"Abdulmajid\",\r\n    \"username\":\"Tirador\",\r\n    \"email\":\"ahmad0abdulmajid@gmail.com\",\r\n    \"password\":\"1234\",\r\n    \"recoveryEmail\":\"syrahmad66@gmail.com\",\r\n    \"DOB\":\"15/3/2001\",\r\n    \"mobileNumber\":\"01069803432\",\r\n    \"role\":\"Company_HR\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/signUp",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"signUp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signIn",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"Tirador\",\r\n    \"password\":\"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/signIn",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"signIn"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateAccount",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY0NzY1NzYsImV4cCI6MTcwNjU2Mjk3Nn0.GzlaulydO867LpL6MzhXtyqFcjmiw8D0nV-K8AWsDKg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"tirador\",\r\n    \"mobileNumber\":\"01156321495\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/updateAccount",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"updateAccount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAccount",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY0NzY1NzYsImV4cCI6MTcwNjU2Mjk3Nn0.GzlaulydO867LpL6MzhXtyqFcjmiw8D0nV-K8AWsDKg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/users/deleteAccount",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"deleteAccount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserAccountData",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY0NzY1NzYsImV4cCI6MTcwNjU2Mjk3Nn0.GzlaulydO867LpL6MzhXtyqFcjmiw8D0nV-K8AWsDKg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/users/getUserAccountData",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"getUserAccountData"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProfileData",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/getProfileData/65b6c41d7829c33cfb03711d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"getProfileData",
+								"65b6c41d7829c33cfb03711d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatePassword",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY0NzY1NzYsImV4cCI6MTcwNjU2Mjk3Nn0.GzlaulydO867LpL6MzhXtyqFcjmiw8D0nV-K8AWsDKg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currentPassword\":\"1234\",\r\n    \"password\":\"1010\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/updatePassword",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgetPassword",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY0NzY1NzYsImV4cCI6MTcwNjU2Mjk3Nn0.GzlaulydO867LpL6MzhXtyqFcjmiw8D0nV-K8AWsDKg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"ahmad0abdulmajid@gmail.com\",\r\n    \"OTP\":352818,\r\n    \"password\":\"2200\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/forgetPassword",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"forgetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAccountsByRecoveryEmail",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"recoveryEmail\":\"syrahmad66@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/getAccountsByRecoveryEmail",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"getAccountsByRecoveryEmail"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Company",
+			"item": [
+				{
+					"name": "createCompany",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY0NzY1NzYsImV4cCI6MTcwNjU2Mjk3Nn0.GzlaulydO867LpL6MzhXtyqFcjmiw8D0nV-K8AWsDKg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"companyName\":\"Talpods\",\r\n    \"description\":\"tech company\",\r\n    \"industry\":\"Tech\",\r\n    \"address\":\"UAE\",\r\n    \"numberOfEmployees\":20,\r\n    \"companyEmail\":\"Talpds@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/companies/createCompany",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"companies",
+								"createCompany"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateCompany",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY0NzY1NzYsImV4cCI6MTcwNjU2Mjk3Nn0.GzlaulydO867LpL6MzhXtyqFcjmiw8D0nV-K8AWsDKg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"industry\":\"Technology\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/companies/updateCompany/65b6e7b518d8d73fc3421a1e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"companies",
+								"updateCompany",
+								"65b6e7b518d8d73fc3421a1e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCompany",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY0NzY1NzYsImV4cCI6MTcwNjU2Mjk3Nn0.GzlaulydO867LpL6MzhXtyqFcjmiw8D0nV-K8AWsDKg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/companies/deleteCompany/65b6e7b518d8d73fc3421a1e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"companies",
+								"deleteCompany",
+								"65b6e7b518d8d73fc3421a1e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCompanyData",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY0NzY1NzYsImV4cCI6MTcwNjU2Mjk3Nn0.GzlaulydO867LpL6MzhXtyqFcjmiw8D0nV-K8AWsDKg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/companies/getCompanyData/65b7786138598b082f7cd39c",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"companies",
+								"getCompanyData",
+								"65b7786138598b082f7cd39c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "searchCompanyByName",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY0NzY1NzYsImV4cCI6MTcwNjU2Mjk3Nn0.GzlaulydO867LpL6MzhXtyqFcjmiw8D0nV-K8AWsDKg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/companies/searchCompanyByName?companyName=Talpods",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"companies",
+								"searchCompanyByName"
+							],
+							"query": [
+								{
+									"key": "companyName",
+									"value": "Talpods"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getApplicationsForJobs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY0NzY1NzYsImV4cCI6MTcwNjU2Mjk3Nn0.GzlaulydO867LpL6MzhXtyqFcjmiw8D0nV-K8AWsDKg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/companies/getApplicationsForJobs/65b7786138598b082f7cd39c",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"companies",
+								"getApplicationsForJobs",
+								"65b7786138598b082f7cd39c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "collectTheApplicationAndCreateExcelSheet",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY0NzY1NzYsImV4cCI6MTcwNjU2Mjk3Nn0.GzlaulydO867LpL6MzhXtyqFcjmiw8D0nV-K8AWsDKg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/companies/collectTheApplicationAndCreateExcelSheet/65b7786138598b082f7cd39c",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"companies",
+								"collectTheApplicationAndCreateExcelSheet",
+								"65b7786138598b082f7cd39c"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Job",
+			"item": [
+				{
+					"name": "addJob",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY0NzY1NzYsImV4cCI6MTcwNjU2Mjk3Nn0.GzlaulydO867LpL6MzhXtyqFcjmiw8D0nV-K8AWsDKg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"jobTitle\":\"Backend Developer\",\r\n    \"jobLocation\":\"hybrid\",\r\n    \"workingTime\":\"full-time\",\r\n    \"seniorityLevel\":\"Junior\",\r\n    \"jobDescription\":\"Building trendy web applications\",\r\n    \"technicalSkills\":[\"Node js\", \"MongoDB\"],\r\n    \"softSkills\":[\"Communcation\", \"Team work\"],\r\n    \"company\":\"Talpods\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/jobs/addJob",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"jobs",
+								"addJob"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateJob",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY1MjkyMTAsImV4cCI6MTcwNjYxNTYxMH0.mhyMRqUMoHzVX3G-DWJdhjJOBVinzobMqzteL6Bb8Rg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"jobLocation\":\"remotely\",\r\n    \"workingTime\":\"part-time\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/jobs/updateJob/65b797f535e390d77b591bb2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"jobs",
+								"updateJob",
+								"65b797f535e390d77b591bb2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteJob",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accesstoken_",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY0NzY1NzYsImV4cCI6MTcwNjU2Mjk3Nn0.GzlaulydO867LpL6MzhXtyqFcjmiw8D0nV-K8AWsDKg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/jobs/deleteJob/65b797f535e390d77b591bb2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"jobs",
+								"deleteJob",
+								"65b797f535e390d77b591bb2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllJobsWithTheirCmpanies",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY0NzY1NzYsImV4cCI6MTcwNjU2Mjk3Nn0.GzlaulydO867LpL6MzhXtyqFcjmiw8D0nV-K8AWsDKg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/jobs/getAllJobsWithTheirCmpanies",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"jobs",
+								"getAllJobsWithTheirCmpanies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllJobsForACompany",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY0NzY1NzYsImV4cCI6MTcwNjU2Mjk3Nn0.GzlaulydO867LpL6MzhXtyqFcjmiw8D0nV-K8AWsDKg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/jobs/getAllJobsForACompany/65b7786138598b082f7cd39c",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"jobs",
+								"getAllJobsForACompany",
+								"65b7786138598b082f7cd39c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllJobsThatMatchFilter",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY0NzY1NzYsImV4cCI6MTcwNjU2Mjk3Nn0.GzlaulydO867LpL6MzhXtyqFcjmiw8D0nV-K8AWsDKg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"jobLocation\":\"remotely\",\r\n    \"workingTime\":\"part-time\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/jobs/getAllJobsThatMatchFilter",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"jobs",
+								"getAllJobsThatMatchFilter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "applyForAJob",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI2YzQxZDc4MjljMzNjZmIwMzcxMWQiLCJpYXQiOjE3MDY0NzY1NzYsImV4cCI6MTcwNjU2Mjk3Nn0.GzlaulydO867LpL6MzhXtyqFcjmiw8D0nV-K8AWsDKg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userTechSkills\":[\"NodeJs\", \"MongoDB\"],\r\n    \"userSoftSkills\":[\"Team Work\", \"Soft Skills\"],\r\n    \"userResume\":\"CV\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/jobs/applyForAJob/65b797f535e390d77b591bb2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"jobs",
+								"applyForAJob",
+								"65b797f535e390d77b591bb2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:5000",
+			"type": "string"
+		}
+	]
+}
