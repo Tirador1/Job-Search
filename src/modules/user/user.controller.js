@@ -1,6 +1,6 @@
-import User from "./../../../DB/models/user.collection.js";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
+import User from './../../../DB/models/user.collection.js';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
 /**
  * Steps to create a user
@@ -36,9 +36,9 @@ export const signUp = async (req, res, next) => {
     OTP,
   });
   if (!user) {
-    return next(new Error("User is not found", { cause: 404 }));
+    return next(new Error('User is not found', { cause: 404 }));
   }
-  res.status(201).json({ message: "User Created Successfully", user });
+  res.status(201).json({ message: 'User Created Successfully', user });
 };
 
 /**
@@ -56,21 +56,21 @@ export const signIn = async (req, res, next) => {
     $or: [{ username: username }, { mobileNumber: username }],
   });
   if (!user) {
-    return next(new Error("User is not found", { cause: 404 }));
+    return next(new Error('User is not found', { cause: 404 }));
   }
   const isPasswordValid = bcrypt.compareSync(password, user.password);
   if (!isPasswordValid) {
-    return next(new Error("Invalid password", { cause: 401 }));
+    return next(new Error('Invalid password', { cause: 401 }));
   }
-  user.status = "online";
+  user.status = 'online';
   await user.save();
 
   // Create and sign the JWT token
   const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
-    expiresIn: "1d",
+    expiresIn: '1d',
   });
 
-  res.status(200).json({ message: "Login successful", token });
+  res.status(200).json({ message: 'Login successful', token });
 };
 
 /**
@@ -107,9 +107,9 @@ export const updateAccount = async (req, res, next) => {
     { new: true }
   );
   if (!user) {
-    return next(new Error("User is not found", { cause: 404 }));
+    return next(new Error('User is not found', { cause: 404 }));
   }
-  res.status(200).json({ message: "User Updated Successfully", user });
+  res.status(200).json({ message: 'User Updated Successfully', user });
 };
 
 /**
@@ -121,9 +121,9 @@ export const updateAccount = async (req, res, next) => {
 export const deleteAccount = async (req, res, next) => {
   const user = await User.findByIdAndDelete(req.user.id);
   if (!user) {
-    return next(new Error("User is not found", { cause: 404 }));
+    return next(new Error('User is not found', { cause: 404 }));
   }
-  res.status(200).json({ message: "User Deleted Successfully" });
+  res.status(200).json({ message: 'User Deleted Successfully' });
 };
 
 /**
@@ -134,9 +134,9 @@ export const deleteAccount = async (req, res, next) => {
 export const getUserAccountData = async (req, res, next) => {
   const user = await User.findById(req.user.id, { password: 0 });
   if (!user) {
-    return next(new Error("User is not found", { cause: 404 }));
+    return next(new Error('User is not found', { cause: 404 }));
   }
-  res.status(200).json({ message: "User Data Fetched Successfully", user });
+  res.status(200).json({ message: 'User Data Fetched Successfully', user });
 };
 
 /**
@@ -147,9 +147,9 @@ export const getUserAccountData = async (req, res, next) => {
 export const getProfileData = async (req, res, next) => {
   const user = await User.findById(req.params.userId);
   if (!user) {
-    return next(new Error("User is not found", { cause: 404 }));
+    return next(new Error('User is not found', { cause: 404 }));
   }
-  res.status(200).json({ message: "User Data Fetched Successfully", user });
+  res.status(200).json({ message: 'User Data Fetched Successfully', user });
 };
 
 /**
@@ -164,7 +164,7 @@ export const updatePassword = async (req, res, next) => {
   const user = await User.findById(req.user.id);
   const isPasswordValid = bcrypt.compareSync(currentPassword, user.password);
   if (!isPasswordValid) {
-    return next(new Error("Invalid password", { cause: 401 }));
+    return next(new Error('Invalid password', { cause: 401 }));
   }
   const hashedPassword = bcrypt.hashSync(password, +process.env.SALT);
   const updatedUser = await User.findByIdAndUpdate(
@@ -173,11 +173,11 @@ export const updatePassword = async (req, res, next) => {
     { new: true }
   );
   if (!user) {
-    return next(new Error("User is not found", { cause: 404 }));
+    return next(new Error('User is not found', { cause: 404 }));
   }
   res
     .status(200)
-    .json({ message: "Password Updated Successfully", updatedUser });
+    .json({ message: 'Password Updated Successfully', updatedUser });
 };
 
 /**
@@ -191,11 +191,11 @@ export const forgetPassword = async (req, res, next) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
-    return next(new Error("User is not found", { cause: 404 }));
+    return next(new Error('User is not found', { cause: 404 }));
   }
   const { OTP } = req.body;
   if (OTP !== user.OTP) {
-    return next(new Error("Invalid OTP", { cause: 401 }));
+    return next(new Error('Invalid OTP', { cause: 401 }));
   }
   const newPassword = req.body.password;
   const hashedPassword = bcrypt.hashSync(newPassword, +process.env.SALT);
@@ -205,9 +205,9 @@ export const forgetPassword = async (req, res, next) => {
     { new: true }
   );
   if (!updatedUser) {
-    return next(new Error("User is not found", { cause: 404 }));
+    return next(new Error('User is not found', { cause: 404 }));
   }
-  res.status(200).json({ message: "Password Updated Successfully", user });
+  res.status(200).json({ message: 'Password Updated Successfully', user });
 };
 
 /**
@@ -219,7 +219,7 @@ export const getAccountsByRecoveryEmail = async (req, res, next) => {
   const { recoveryEmail } = req.body;
   const users = await User.find({ recoveryEmail }, { password: 0 });
   if (!users) {
-    return next(new Error("Users are not found", { cause: 404 }));
+    return next(new Error('Users are not found', { cause: 404 }));
   }
-  res.status(200).json({ message: "Users Data Fetched Successfully", users });
+  res.status(200).json({ message: 'Users Data Fetched Successfully', users });
 };
