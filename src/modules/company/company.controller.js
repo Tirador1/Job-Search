@@ -26,6 +26,15 @@ export const createCompany = async (req, res, next) => {
     );
   }
 
+  const isEmailExists = await Company.findOne({
+    companyEmail,
+  });
+  if (isEmailExists) {
+    return next(
+      new Error("Company with this email already exists", { cause: 400 })
+    );
+  }
+
   const company = await Company.create({
     companyName,
     description,
@@ -37,7 +46,7 @@ export const createCompany = async (req, res, next) => {
   });
 
   if (!company) {
-    return next(new Error("Company not created", { cause: 500 }));
+    return next(new Error("Company not created", { cause: 400 }));
   }
 
   res.status(201).json({
@@ -203,7 +212,7 @@ export const searchCompanyByName = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "Companies retrieved successfully",
-      data: companies,
+      data: { companies },
     });
   } catch (error) {
     next(error);
@@ -237,7 +246,7 @@ export const getApplicationsForJobs = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "Applications retrieved successfully",
-      data: applications,
+      data: { applications },
     });
   } catch (error) {
     next(error);

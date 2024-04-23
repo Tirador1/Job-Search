@@ -7,7 +7,12 @@ export const createCompanySchema = Joi.object({
     industry: Joi.string().required(),
     address: Joi.string().required(),
     numberOfEmployees: Joi.number().min(11).required(),
-    companyEmail: Joi.string().email().required(),
+    companyEmail: Joi.string()
+      .email({
+        minDomainSegments: 2,
+        tlds: { allow: ["com", "net"] },
+      })
+      .required(),
     companyHR: Joi.string().required(),
   }),
 });
