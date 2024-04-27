@@ -1,55 +1,64 @@
-import express from "express";
-import * as uc from "./job.controller.js";
-import { auth } from "../../middlewares/auth.js";
-import expressAsyncHandler from "express-async-handler";
-import { valdationMiddleware } from "../../middlewares/validation.js";
-import * as schema from "./job.validationSchema.js";
+import express from 'express';
+import * as uc from './job.controller.js';
+import { auth } from '../../middlewares/auth.js';
+import expressAsyncHandler from 'express-async-handler';
+import { valdationMiddleware } from '../../middlewares/validation.js';
+import * as schema from './job.validationSchema.js';
 
 const router = express.Router();
 
 router.post(
-  "/addJob",
+  '/addJob',
   auth,
   valdationMiddleware(schema.addJobSchema),
   expressAsyncHandler(uc.addJob)
 );
 
 router.put(
-  "/updateJob/:jobId",
+  '/updateJob/:jobId',
   auth,
   valdationMiddleware(schema.updateJobSchema),
   expressAsyncHandler(uc.updateJob)
 );
 
 router.delete(
-  "/deleteJob/:jobId",
+  '/deleteJob/:jobId',
   auth,
   valdationMiddleware(schema.deleteJobSchema),
   expressAsyncHandler(uc.deleteJob)
 );
 
+router.get('/getJob/:jobId', auth, expressAsyncHandler(uc.getJob));
+
 router.get(
-  "/getAllJobsWithTheirCmpanies",
+  '/getAllJobsWithTheirCmpanies',
   auth,
   expressAsyncHandler(uc.getAllJobsWithTheirCompanies)
 );
+router.get(
+  '/getLastThreeJobsWithTheirCmpanies',
+  auth,
+  expressAsyncHandler(uc.getLastThreeJobsWithTheirCompanies)
+);
 
 router.get(
-  "/getAllJobsForACompany/:companyId",
+  '/getAllJobsForACompany/:companyId',
   auth,
   valdationMiddleware(schema.getAllJobsForACompanySchema),
   expressAsyncHandler(uc.getAllJobsForACompany)
 );
 
+router.get('/getAllJobsForAHr', auth, expressAsyncHandler(uc.getAllJobsForAHr));
+
 router.get(
-  "/getAllJobsThatMatchFilter",
+  '/getAllJobsThatMatchFilter',
   auth,
   valdationMiddleware(schema.getAllJobsThatMatchFilterSchema),
   expressAsyncHandler(uc.getAllJobsThatMatchFilter)
 );
 
 router.post(
-  "/applyForAJob/:jobId",
+  '/applyForAJob/:jobId',
   auth,
   valdationMiddleware(schema.applyForAJobSchema),
   expressAsyncHandler(uc.applyForAJob)

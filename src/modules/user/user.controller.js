@@ -21,7 +21,8 @@ export const signUp = async (req, res, next) => {
     role,
   } = req.body;
 
-  const hashedPassword = bcrypt.hashSync(password, +process.env.SALT);
+  const hashedPassword = await bcrypt.hash(password, +process.env.SALT);
+  console.log('hashedPassword,', hashedPassword);
   const OTP = Math.floor(100000 + Math.random() * 900000);
   const user = await User.create({
     firstName,
@@ -70,7 +71,7 @@ export const signIn = async (req, res, next) => {
     expiresIn: '1d',
   });
 
-  res.status(200).json({ message: 'Login successful', token });
+  res.status(200).json({ message: 'Login successful', token, role: user.role });
 };
 
 /**
@@ -145,7 +146,8 @@ export const getUserAccountData = async (req, res, next) => {
  * 2. Return the user data
  */
 export const getProfileData = async (req, res, next) => {
-  const user = await User.findById(req.params.userId);
+  const { userId } = req.params;
+  const user = await User.findById(userId, { password: 0 });
   if (!user) {
     return next(new Error('User is not found', { cause: 404 }));
   }

@@ -1,30 +1,35 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 const jobSchema = new Schema(
   {
     jobTitle: {
       type: String,
-      unique: true,
       required: true,
     },
     jobLocation: {
       type: String,
-      enum: ["onsite", "remotely", "hybrid"],
+      enum: ['onsite', 'remotely', 'hybrid'],
       required: true,
     },
     workingTime: {
       type: String,
-      enum: ["part-time", "full-time"],
+      enum: ['part-time', 'full-time'],
     },
     seniorityLevel: {
       type: String,
-      enum: ["Junior", "Mid-Level", "Senior", "Team-Lead", "CTO"],
+      enum: ['Junior', 'Mid-Level', 'Senior', 'Team-Lead', 'CTO'],
       required: true,
     },
     jobDescription: {
       type: String,
       required: true,
     },
+
+    salary: {
+      type: String,
+      required: true,
+    },
+
     technicalSkills: {
       type: [String],
       required: true,
@@ -35,18 +40,18 @@ const jobSchema = new Schema(
     },
     addedBy: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
     company: {
       type: Schema.Types.ObjectId,
-      ref: "Company",
+      ref: 'Company',
       required: true,
     },
   },
   { timestamps: true }
 );
 
-const Job = model("Job", jobSchema);
+const Job = model('Job', jobSchema);
 
 export default Job;

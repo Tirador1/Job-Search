@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 const validateEmail = (email) => {
   var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -32,24 +32,16 @@ const companySchema = new Schema(
     companyEmail: {
       type: String,
       trim: true,
-      lowercase: true,
-      unique: true,
-      required: "Email address is required",
-      validate: [validateEmail, "Please fill a valid email address"],
-      match: [
-        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-        "Please fill a valid email address",
-      ],
     },
     companyHR: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
   },
   { timestamps: true }
 );
 
-const Company = model("Company", companySchema);
+const Company = model('Company', companySchema);
 
 export default Company;

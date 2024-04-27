@@ -1,8 +1,8 @@
-import Job from "../../../DB/models/job.collection.js";
-import Company from "../../../DB/models/company.collection.js";
-import Application from "../../../DB/models/application.collection.js";
-import moment from "moment";
-
+import Job from '../../../DB/models/job.collection.js';
+import Company from '../../../DB/models/company.collection.js';
+import Application from '../../../DB/models/application.collection.js';
+import moment from 'moment';
+import CryptoJS from 'crypto-js';
 /**
  * Steps to create a job
  * 1. Check if the user is a company HR
@@ -17,6 +17,7 @@ export const addJob = async (req, res, next) => {
     workingTime,
     seniorityLevel,
     jobDescription,
+    salary,
     technicalSkills,
     softSkills,
     company,
@@ -27,8 +28,8 @@ export const addJob = async (req, res, next) => {
     return next(new Error("Your company doesn't exist", { cause: 404 }));
   }
 
-  if (req.user.role !== "Company_HR") {
-    return next(new Error("You are not allowed to add a job", { cause: 403 }));
+  if (req.user.role !== 'Company_HR') {
+    return next(new Error('You are not allowed to add a job', { cause: 403 }));
   }
 
   const job = await Job.create({
@@ -37,6 +38,7 @@ export const addJob = async (req, res, next) => {
     workingTime,
     seniorityLevel,
     jobDescription,
+    salary,
     technicalSkills,
     softSkills,
     addedBy: req.user.id,
@@ -44,12 +46,12 @@ export const addJob = async (req, res, next) => {
   });
 
   if (!job) {
-    return next(new Error("Job not added", { cause: 500 }));
+    return next(new Error('Job not added', { cause: 500 }));
   }
 
   res.status(201).json({
     success: true,
-    message: "Job added successfully",
+    message: 'Job added successfully',
     data: job,
   });
 };
@@ -76,15 +78,15 @@ export const updateJob = async (req, res, next) => {
     const job = await Job.findById(jobId);
 
     if (!job) {
-      return next(new Error("Job not found", { cause: 404 }));
+      return next(new Error('Job not found', { cause: 404 }));
     }
 
     if (
-      req.user.role !== "Company_HR" ||
+      req.user.role !== 'Company_HR' ||
       req.user.id.toString() !== job.addedBy.toString()
     ) {
       return next(
-        new Error("You are not allowed to update this job", { cause: 403 })
+        new Error('You are not allowed to update this job', { cause: 403 })
       );
     }
 
@@ -104,7 +106,7 @@ export const updateJob = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: "Job updated successfully",
+      message: 'Job updated successfully',
       data: updatedJob,
     });
   } catch (error) {
@@ -125,15 +127,15 @@ export const deleteJob = async (req, res, next) => {
     const job = await Job.findById(jobId);
 
     if (!job) {
-      return next(new Error("Job not found", { cause: 404 }));
+      return next(new Error('Job not found', { cause: 404 }));
     }
 
     if (
-      req.user.role !== "Company_HR" ||
+      req.user.role !== 'Company_HR' ||
       req.user.id.toString() !== job.addedBy.toString()
     ) {
       return next(
-        new Error("You are not allowed to delete this job", { cause: 403 })
+        new Error('You are not allowed to delete this job', { cause: 403 })
       );
     }
 
@@ -141,7 +143,35 @@ export const deleteJob = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: "Job deleted successfully",
+      message: 'Job deleted successfully',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getJob = async (req, res, next) => {
+  const { jobId } = req.params;
+
+  try {
+    const job = await Job.findById(jobId).populate('company');
+
+    if (!job) {
+      return next(new Error('Job not found', { cause: 404 }));
+    }
+
+    let decryptedEmail = await CryptoJS.AES.decrypt(
+      job.company.companyEmail,
+      process.env.CRYPTO_SECRET
+    );
+    decryptedEmail = decryptedEmail.toString(CryptoJS.enc.Utf8);
+
+    job.company.companyEmail = decryptedEmail;
+
+    res.status(200).json({
+      success: true,
+      message: 'Job retrieved successfully',
+      data: job,
     });
   } catch (error) {
     next(error);
@@ -156,11 +186,28 @@ export const deleteJob = async (req, res, next) => {
  */
 export const getAllJobsWithTheirCompanies = async (req, res, next) => {
   try {
-    const jobs = await Job.find().populate("company", "companyName");
+    const jobs = await Job.find().populate('company', 'companyName');
 
     res.status(200).json({
       success: true,
-      message: "All jobs retrieved successfully",
+      message: 'All jobs retrieved successfully',
+      data: jobs,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getLastThreeJobsWithTheirCompanies = async (req, res, next) => {
+  try {
+    const jobs = await Job.find()
+      .sort({ createdAt: -1 })
+      .limit(3)
+      .populate('company', 'companyName');
+
+    res.status(200).json({
+      success: true,
+      message: 'Last three jobs retrieved successfully',
       data: jobs,
     });
   } catch (error) {
@@ -180,7 +227,7 @@ export const getAllJobsForACompany = async (req, res, next) => {
   const company = await Company.findById(companyId);
 
   if (!company) {
-    return next(new Error("Company not found", { cause: 404 }));
+    return next(new Error('Company not found', { cause: 404 }));
   }
 
   try {
@@ -188,7 +235,21 @@ export const getAllJobsForACompany = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: "All jobs retrieved successfully",
+      message: 'All jobs retrieved successfully',
+      data: jobs,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAllJobsForAHr = async (req, res, next) => {
+  try {
+    const jobs = await Job.find({ addedBy: req.user.id }).populate('company');
+
+    res.status(200).json({
+      success: true,
+      message: 'All jobs retrieved successfully',
       data: jobs,
     });
   } catch (error) {
@@ -209,11 +270,11 @@ export const getAllJobsThatMatchFilter = async (req, res, next) => {
   console.log(...filter);
 
   try {
-    const jobs = await Job.find(...filter).populate("company", "companyName");
+    const jobs = await Job.find(...filter).populate('company', 'companyName');
 
     res.status(200).json({
       success: true,
-      message: "All jobs retrieved successfully",
+      message: 'All jobs retrieved successfully',
       data: jobs,
     });
   } catch (error) {
@@ -232,13 +293,13 @@ export const applyForAJob = async (req, res, next) => {
   const { jobId } = req.params;
   const { userTechSkills, userSoftSkills, userResume } = req.body;
 
-  const momentDate = moment().format("YYYY-MM-DD");
+  const momentDate = moment().format('YYYY-MM-DD');
 
   try {
     const job = await Job.findById(jobId);
 
     if (!job) {
-      return next(new Error("Job not found", { cause: 404 }));
+      return next(new Error('Job not found', { cause: 404 }));
     }
 
     const applicationExists = await Application.findOne({
@@ -248,7 +309,7 @@ export const applyForAJob = async (req, res, next) => {
 
     if (applicationExists) {
       return next(
-        new Error("You have already applied for this job", { cause: 409 })
+        new Error('You have already applied for this job', { cause: 409 })
       );
     }
 
@@ -263,7 +324,7 @@ export const applyForAJob = async (req, res, next) => {
 
     res.status(201).json({
       success: true,
-      message: "Application submitted successfully",
+      message: 'Application submitted successfully',
       data: application,
     });
   } catch (error) {
