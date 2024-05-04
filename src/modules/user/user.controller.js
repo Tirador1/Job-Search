@@ -22,7 +22,6 @@ export const signUp = async (req, res, next) => {
   } = req.body;
 
   const hashedPassword = await bcrypt.hash(password, +process.env.SALT);
-  console.log('hashedPassword,', hashedPassword);
   const OTP = Math.floor(100000 + Math.random() * 900000);
   const user = await User.create({
     firstName,
