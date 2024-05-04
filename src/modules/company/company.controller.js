@@ -1,9 +1,9 @@
-import Company from '../../../DB/models/company.collection.js';
-import Application from '../../../DB/models/application.collection.js';
-import Job from '../../../DB/models/job.collection.js';
-import moment from 'moment';
-import xl from 'excel4node';
-import CryptoJS from 'crypto-js';
+import Company from "../../../DB/models/company.collection.js";
+import Application from "../../../DB/models/application.collection.js";
+import Job from "../../../DB/models/job.collection.js";
+import moment from "moment";
+import xl from "excel4node";
+import CryptoJS from "crypto-js";
 
 /**
  * Steps to create a company
@@ -21,9 +21,9 @@ export const createCompany = async (req, res, next) => {
     companyEmail,
   } = req.body;
 
-  if (req.user.role !== 'Company_HR') {
+  if (req.user.role !== "Company_HR") {
     return next(
-      new Error('You are not allowed to create a company', { cause: 403 })
+      new Error("You are not allowed to create a company", { cause: 403 })
     );
   }
 
@@ -32,14 +32,14 @@ export const createCompany = async (req, res, next) => {
     process.env.CRYPTO_SECRET
   ).toString();
 
-  console.log('encryptedEmail:', encryptedEmail);
+  console.log("encryptedEmail:", encryptedEmail);
 
   const isEmailExists = await Company.findOne({
     companyEmail,
   });
   if (isEmailExists) {
     return next(
-      new Error('Company with this email already exists', { cause: 409 })
+      new Error("Company with this email already exists", { cause: 409 })
     );
   }
 
@@ -54,12 +54,12 @@ export const createCompany = async (req, res, next) => {
   });
 
   if (!company) {
-    return next(new Error('Company not created', { cause: 400 }));
+    return next(new Error("Company not created", { cause: 400 }));
   }
 
   res.status(201).json({
     success: true,
-    message: 'Company created successfully',
+    message: "Company created successfully",
     data: company,
   });
 };
@@ -85,15 +85,15 @@ export const updateCompany = async (req, res, next) => {
     const company = await Company.findById(companyId);
 
     if (!company) {
-      return next(new Error('Company not found', { cause: 404 }));
+      return next(new Error("Company not found", { cause: 404 }));
     }
 
     if (
-      req.user.role !== 'Company_HR' ||
+      req.user.role !== "Company_HR" ||
       req.user.id.toString() !== company.companyHR.toString()
     ) {
       return next(
-        new Error('You are not allowed to update this company', { cause: 403 })
+        new Error("You are not allowed to update this company", { cause: 403 })
       );
     }
 
@@ -112,7 +112,7 @@ export const updateCompany = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Company updated successfully',
+      message: "Company updated successfully",
       data: updatedCompany,
     });
   } catch (error) {
@@ -135,15 +135,15 @@ export const deleteCompany = async (req, res, next) => {
     const company = await Company.findById(companyId);
 
     if (!company) {
-      return next(new Error('Company not found', { cause: 404 }));
+      return next(new Error("Company not found", { cause: 404 }));
     }
 
     if (
-      req.user.role !== 'Company_HR' ||
+      req.user.role !== "Company_HR" ||
       req.user.id.toString() !== company.companyHR.toString()
     ) {
       return next(
-        new Error('You are not allowed to delete this company', { cause: 403 })
+        new Error("You are not allowed to delete this company", { cause: 403 })
       );
     }
 
@@ -153,7 +153,7 @@ export const deleteCompany = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Company deleted successfully',
+      message: "Company deleted successfully",
     });
   } catch (error) {
     next(error);
@@ -166,7 +166,7 @@ export const getAllCompaniesForHR = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Companies retrieved successfully',
+      message: "Companies retrieved successfully",
       data: { companies },
     });
   } catch (error) {
@@ -188,15 +188,15 @@ export const getCompanyData = async (req, res, next) => {
     const company = await Company.findById(companyId);
 
     if (!company) {
-      return next(new Error('Company not found', { cause: 404 }));
+      return next(new Error("Company not found", { cause: 404 }));
     }
 
     if (
-      req.user.role !== 'Company_HR' ||
+      req.user.role !== "Company_HR" ||
       req.user.id.toString() !== company.companyHR.toString()
     ) {
       return next(
-        new Error('You are not allowed to access this company data', {
+        new Error("You are not allowed to access this company data", {
           cause: 403,
         })
       );
@@ -206,7 +206,7 @@ export const getCompanyData = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Company data retrieved successfully',
+      message: "Company data retrieved successfully",
       data: {
         company,
         jobs,
@@ -228,12 +228,12 @@ export const searchCompanyByName = async (req, res, next) => {
 
   try {
     const companies = await Company.find({
-      companyName: { $regex: companyName, $options: 'i' },
+      companyName: { $regex: companyName, $options: "i" },
     });
 
     res.status(200).json({
       success: true,
-      message: 'Companies retrieved successfully',
+      message: "Companies retrieved successfully",
       data: { companies },
     });
   } catch (error) {
@@ -254,18 +254,19 @@ export const getApplicationsForJobs = async (req, res, next) => {
   try {
     const job = await Job.findById(jobId);
     if (!job) {
-      return next(new Error('Job not found', { cause: 404 }));
+      return next(new Error("Job not found", { cause: 404 }));
     }
 
-    const applications = await Application.find({ jobId });
+    const applications = await Application.find({ jobId }).populate("userId", {
+      password: 0,
+    });
     if (!applications) {
-      return next(new Error('Applications not found', { cause: 404 }));
+      return next(new Error("Applications not found", { cause: 404 }));
     }
-
     res.status(200).json({
       success: true,
-      message: 'Applications retrieved successfully',
-      data: { applications },
+      message: "Applications retrieved successfully",
+      data: applications,
     });
   } catch (error) {
     next(error);
@@ -290,22 +291,22 @@ export const collectTheApplicationAndCreateExcelSheet = async (
 ) => {
   const { companyId } = req.params;
 
-  const date = moment().format('YYYY-MM-DD');
+  const date = moment().format("YYYY-MM-DD");
 
   try {
     const company = await Company.findById(companyId);
 
     if (!company) {
-      return next(new Error('Company not found', { cause: 404 }));
+      return next(new Error("Company not found", { cause: 404 }));
     }
 
     if (
-      req.user.role !== 'Company_HR' ||
+      req.user.role !== "Company_HR" ||
       req.user.id.toString() !== company.companyHR.toString()
     ) {
       return next(
         new Error(
-          'You are not allowed to access applications for this company',
+          "You are not allowed to access applications for this company",
           {
             cause: 403,
           }
@@ -319,18 +320,18 @@ export const collectTheApplicationAndCreateExcelSheet = async (
     const applications = await Application.find({
       jobId: { $in: jobIds },
       applicationDate: date,
-    }).populate('userId', '-password -__v -createdAt -updatedAt');
+    }).populate("userId", "-password -__v -createdAt -updatedAt");
 
     const wb = new xl.Workbook();
-    const ws = wb.addWorksheet('Applications');
+    const ws = wb.addWorksheet("Applications");
 
     const headingColumnNames = [
-      'Name',
-      'Email',
-      'Phone',
-      'Tech Skills',
-      'Soft Skills',
-      'Resume',
+      "Name",
+      "Email",
+      "Phone",
+      "Tech Skills",
+      "Soft Skills",
+      "Resume",
     ];
 
     let headingColumnIndex = 1;
@@ -349,18 +350,18 @@ export const collectTheApplicationAndCreateExcelSheet = async (
       ws.cell(rowIndex, 1).string(row[2].username);
       ws.cell(rowIndex, 2).string(row[2].email);
       ws.cell(rowIndex, 3).string(row[2].mobileNumber);
-      ws.cell(rowIndex, 4).string(row[3].join(', '));
-      ws.cell(rowIndex, 5).string(row[4].join(', '));
+      ws.cell(rowIndex, 4).string(row[3].join(", "));
+      ws.cell(rowIndex, 5).string(row[4].join(", "));
       ws.cell(rowIndex, 6).string(row[5]);
       rowIndex++;
     });
 
     const fileName = `Applications-${date}.xlsx`;
     res.setHeader(
-      'Content-Type',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
-    res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
+    res.setHeader("Content-Disposition", `attachment; filename=${fileName}`);
     wb.writeToBuffer().then((buffer) => {
       res.send(buffer);
     });

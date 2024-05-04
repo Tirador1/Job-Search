@@ -15,8 +15,8 @@ router.post(
 router.post("/signIn", valdationMiddleware(schema.signInSchema), uc.signIn);
 router.put(
   "/updateAccount",
-  valdationMiddleware(schema.updateAccountSchema),
   auth,
+  valdationMiddleware(schema.updateAccountSchema),
   expressAsyncHandler(uc.updateAccount)
 );
 router.delete(
